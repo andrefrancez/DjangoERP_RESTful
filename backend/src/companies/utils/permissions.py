@@ -26,25 +26,25 @@ def check_permission(user, method, permission_to):
             if Permission.objects.filter(id=permission['permission_id'], codename=required_permission).exists():
                 return True
             
-class EmployeePermissions(Permission.BasePermission):
+class EmployeePermissions(permissions.BasePermission):
     message = 'The employee does not have the management permission'
 
     def has_permission(self, request, _view):
         return check_permission(request.user, request.method, permission_to='employee')
     
-class GroupPermissions(Permission.BasePermission):
+class GroupPermissions(permissions.BasePermission):
     message = 'The employee does not have permission to manage the groups'
 
     def has_permission(self, request, _view):
         return check_permission(request.user, request.method, permission_to='group')
     
-class GroupPermissionsPermission(Permission.BasePermission):
+class GroupPermissionsPermission(permissions.BasePermission):
     message = 'The employee does not have permission to manage permissions'
 
     def has_permission(self, request, _view):
         return check_permission(request.user, request.method, permission_to='permission')
     
-class TaskPermissions(Permission.BasePermission):
+class TaskPermissions(permissions.BasePermission):
     message = 'The employee does not have permission to manage tasks'
 
     def has_permission(self, request, _view):

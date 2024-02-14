@@ -55,6 +55,7 @@ class SpecificEmployeeSerializers(serializers.ModelSerializer):
     
 class GroupSerializers(serializers.ModelSerializer):
     permissions = serializers.SerializerMethodField()
+
     class Meta:
         model = Group
         fields = (
@@ -63,18 +64,18 @@ class GroupSerializers(serializers.ModelSerializer):
             'permissions'
         )
 
-        def get_permissions(self, obj):
-            groups = Group_Permissions.objects.filter(group_id=obj.id).All()
-            permissions = []
+    def get_permissions(self, obj):
+        groups = Group_Permissions.objects.filter(group_id=obj.id).all()
+        permissions = []
 
-            for group in groups:
-                permissions.append({
-                    'id': group.permission.id,
-                    'label': group.permission.label,
-                    'codename':  group.permission.codename
-                })
+        for group in groups:
+            permissions.append({
+                'id': group.permission.id,
+                'label': group.permission.name,
+                'codename': group.permission.codename
+            })
 
-            return permissions
+        return permissions
         
 class PermissionSerializers(serializers.ModelSerializer):
     class Meta:

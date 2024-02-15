@@ -100,8 +100,8 @@ class TaskSerializers(serializers.ModelSerializer):
             'status'
         )
 
-        def get_status(self, obj):
-            return obj.status.name
+    def get_status(self, obj):
+        return obj.status.name
         
 class SpecificTaskSerializers(serializers.ModelSerializer):
     status = serializers.SerializerMethodField()
@@ -119,19 +119,19 @@ class SpecificTaskSerializers(serializers.ModelSerializer):
             'employee'
         )
 
-        def get_status(self, obj):
-            return obj.status.name
+    def get_status(self, obj):
+        return obj.status.name
         
-        def get_employee(self, obj):
-            return EmployeeSerializers(obj.employee).data
+    def get_employee(self, obj):
+        return EmployeeSerializers(obj.employee).data
         
-        def update(self, instance, validated_data):
-            instance.title = validated_data.get('title', instance.title)
-            instance.description = validated_data.get('description', instance.description)
-            instance.status_id = validated_data.get('status_id', instance.status_id)
-            instance.employee_id = validated_data.get('employee_id', instance.employee_id)
-            instance.due_date = validated_data.get('due_date', instance.due_date)
+    def update(self, instance, validated_data):
+        instance.title = validated_data.get('title', instance.title)
+        instance.description = validated_data.get('description', instance.description)
+        instance.status_id = validated_data.get('status_id', instance.status_id)
+        instance.employee_id = validated_data.get('employee_id', instance.employee_id)
+        instance.due_date = validated_data.get('due_date', instance.due_date)
 
-            instance.save()
+        instance.save()
 
-            return instance
+        return instance
